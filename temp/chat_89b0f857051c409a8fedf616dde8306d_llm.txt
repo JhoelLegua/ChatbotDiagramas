@@ -1,0 +1,117 @@
+```plantuml
+@startuml
+' Clases principales del sistema de restaurante
+
+class Cliente {
+    - id: int
+    - nombre: string
+    - contacto: string
+    + realizarPedido(): Orden
+    + solicitarCuenta(): Cuenta
+}
+
+class Mesa {
+    - numero: int
+    - capacidad: int
+    - estado: EstadoMesa
+    + asignarCliente(Cliente): void
+    + liberar(): void
+}
+
+enum EstadoMesa {
+    LIBRE
+    OCUPADA
+    RESERVADA
+}
+
+class Mesero {
+    - id: int
+    - nombre: string
+    + tomarPedido(Cliente, Mesa): Orden
+    + entregarPedido(Orden): void
+    + procesarPago(Cuenta, MetodoPago): bool
+}
+
+class Cocinero {
+    - id: int
+    - nombre: string
+    + prepararPlato(Plato): void
+    + notificarListo(ItemMenu): void
+}
+
+class Orden {
+    - id: int
+    - fechaHora: datetime
+    - estado: EstadoOrden
+    - total: float
+    + agregarItem(ItemMenu, cantidad): void
+    + calcularTotal(): float
+}
+
+enum EstadoOrden {
+    PENDIENTE
+    PREPARANDO
+    LISTO_PARA_ENTREGAR
+    ENTREGADO
+    PAGADO
+    CANCELADO
+}
+
+abstract class ItemMenu {
+    - id: int
+    - nombre: string
+    - precio: float
+    - descripcion: string
+}
+
+class Plato extends ItemMenu {
+    - tipo: string
+    - tiempoPreparacionMin: int
+}
+
+class Bebida extends ItemMenu {
+    - volumenMl: int
+    - esAlcoholica: boolean
+}
+
+class Menu {
+    - id: int
+    - nombre: string
+    + agregarItem(ItemMenu): void
+    + obtenerItems(): List<ItemMenu>
+}
+
+class Cuenta {
+    - id: int
+    - fechaHora: datetime
+    - total: float
+    - propina: float
+    - metodoPago: MetodoPago
+    + calcularSubtotal(): float
+    + aplicarDescuento(porcentaje): void
+}
+
+enum MetodoPago {
+    EFECTIVO
+    TARJETA
+    TRANSFERENCIA
+    APP_MOVIL
+}
+
+' Relaciones entre clases
+
+Cliente "1" -- "0..*" Orden : realiza >
+Mesa "1" -- "0..1" Cliente : ocupada por >
+Mesa "1" -- "0..1" Orden : asociada a >
+Mesero "1" -- "0..*" Orden : toma >
+Mesero "1" -- "0..*" Mesa : atiende >
+Cocinero "1" -- "0..*" Plato : prepara >
+
+Orden "1" -- "1..*" ItemMenu : contiene >
+Menu "1" -- "0..*" ItemMenu : ofrece >
+
+Orden "1" -- "1" Cuenta : genera >
+Cliente "1" -- "0..*" Cuenta : paga >
+
+@enduml
+```

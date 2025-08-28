@@ -1,0 +1,57 @@
+```plantuml
+@startuml
+skinparam state {
+  BackgroundColor<<choice>> #LightBlue
+  BorderColor<<choice>> #Blue
+  BorderThickness<<choice>> 2
+}
+
+[*] --> Identificar_Necesidad : Inicio del Proceso
+
+state "Identificar Necesidad / Disparador" as Identificar_Necesidad
+state "Evaluar Riesgo IT Asociado" as Evaluar_Riesgo
+
+Identificar_Necesidad --> Evaluar_Riesgo : Contexto de la Evaluación Definido
+
+state "Auditoría IT Necesaria?" as Decision_Auditoria_Necesaria <<choice>>
+
+Evaluar_Riesgo --> Decision_Auditoria_Necesaria : Riesgo Analizado (Alto, Moderado, Bajo)
+
+Decision_Auditoria_Necesaria --> No_Auditoria : [Riesgo Bajo o Controles Existentes Suficientes]
+state "Monitorear y Revisar Periódicamente" as No_Auditoria
+No_Auditoria --> [*] : Decisión Finalizada (No se Requiere Auditoría Inmediata)
+
+Decision_Auditoria_Necesaria --> Planificar_Auditoria : [Riesgo Alto o Moderado Detectado]
+state "Planificar Auditoría IT" as Planificar_Auditoria {
+  - Definir Alcance y Objetivos
+  - Asignar Equipo y Recursos
+  - Desarrollar Programa de Auditoría
+}
+
+Planificar_Auditoria --> Ejecutar_Auditoria : Plan de Auditoría Aprobado
+
+state "Ejecutar Auditoría IT" as Ejecutar_Auditoria {
+  - Recopilar Evidencia (Documentos, Entrevistas, Registros)
+  - Realizar Pruebas y Controles
+  - Analizar Hallazgos y Debilidades
+}
+
+Ejecutar_Auditoria --> Reportar_Hallazgos : Evidencia Consolidada y Analizada
+
+state "Reportar Hallazgos y Recomendaciones" as Reportar_Hallazgos {
+  - Documentar No Conformidades y Observaciones
+  - Emitir Informe de Auditoría Final
+  - Proponer Acciones Correctivas y de Mejora
+}
+
+Reportar_Hallazgos --> Seguimiento_Acciones : Informe de Auditoría Comunicado
+
+state "Seguimiento de Acciones Correctivas" as Seguimiento_Acciones {
+  - Verificar Implementación de Acciones
+  - Evaluar Efectividad de las Acciones
+  - Cerrar Hallazgos de Auditoría
+}
+
+Seguimiento_Acciones --> [*] : Proceso de Auditoría Completado
+@enduml
+```

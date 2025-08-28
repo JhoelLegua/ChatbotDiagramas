@@ -1,0 +1,47 @@
+```plantuml
+@startuml
+scale 1.5
+
+state "Inicio: Decisión de Auditoría Informática" as Start
+state "Evaluar el Riesgo Informático y el Alcance" as EvaluarRiesgo
+
+state "Riesgo Justifica Auditoría Completa?" as ChoiceRiesgo <<choice>>
+
+state "Realizar Auditoría Detallada" as AuditoriaDetallada
+state "Auditoría Simplificada o No Esencial" as AuditoriaSimplificada
+
+state "Cumplimiento de Objetivos de Seguridad y Control?" as ChoiceCumplimiento <<choice>>
+
+state "Conclusiones: Reporte con Hallazgos y Recomendaciones" as Hallazgos
+state "Conclusiones: Reporte de Cumplimiento Satisfactorio" as CumplimientoOK
+
+state "Se Identificaron Debilidades Menores?" as ChoiceDebilidades <<choice>>
+
+state "Recomendar Mejoras y Monitoreo Continuo" as Mejoras
+state "Auditoría No Requerida / Cerrar Proceso" as NoRequerida
+
+state "Fin del Proceso de Decisión" as End
+
+Start --> EvaluarRiesgo
+EvaluarRiesgo --> ChoiceRiesgo
+
+ChoiceRiesgo --> AuditoriaDetallada : Sí (Riesgo Alto)
+ChoiceRiesgo --> AuditoriaSimplificada : No (Riesgo Bajo / Moderado)
+
+AuditoriaDetallada --> ChoiceCumplimiento
+
+ChoiceCumplimiento --> CumplimientoOK : Sí (Objetivos Met)
+ChoiceCumplimiento --> Hallazgos : No (Incumplimiento)
+
+AuditoriaSimplificada --> ChoiceDebilidades
+
+ChoiceDebilidades --> Mejoras : Sí (Debilidades Menores)
+ChoiceDebilidades --> NoRequerida : No (Sin Debilidades)
+
+CumplimientoOK --> End
+Hallazgos --> End
+Mejoras --> End
+NoRequerida --> End
+
+@enduml
+```

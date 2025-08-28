@@ -1,0 +1,38 @@
+```plantuml
+@startuml
+skinparam state {
+  BackgroundColor White
+  BorderColor Black
+  FontColor Black
+  ArrowColor Black
+}
+
+[*] --> InicioProcesoDecision
+state "Inicio del Proceso de Decisión" as InicioProcesoDecision
+
+InicioProcesoDecision --> RecopilacionInformacion
+state "Recopilación de Información" as RecopilacionInformacion : Obtener datos sobre sistemas, riesgos y cumplimiento.
+
+RecopilacionInformacion --> AnalisisRiesgos
+state "Análisis de Riesgos" as AnalisisRiesgos : Evaluar amenazas y vulnerabilidades informáticas.
+
+AnalisisRiesgos --> EvaluacionRecursos
+state "Evaluación de Recursos" as EvaluacionRecursos : Considerar personal, herramientas y presupuesto disponibles.
+
+EvaluacionRecursos --> DeterminarNecesidadAuditoria
+
+state "Determinar Necesidad de Auditoría" as DeterminarNecesidadAuditoria <<choice>>
+
+DeterminarNecesidadAuditoria --> PlanificarAuditoria : Riesgo Alto / Requisito Legal
+state "Planificar Auditoría Informática" as PlanificarAuditoria : Definir alcance, objetivos y cronograma.
+
+DeterminarNecesidadAuditoria --> MonitoreoAlternativas : Riesgo Bajo / Restricciones de Recursos
+state "Monitoreo y Alternativas" as MonitoreoAlternativas : Implementar controles compensatorios o monitoreo continuo.
+
+PlanificarAuditoria --> FinProcesoDecision
+MonitoreoAlternativas --> FinProcesoDecision
+state "Fin del Proceso de Decisión" as FinProcesoDecision
+
+FinProcesoDecision --> [*]
+@enduml
+```

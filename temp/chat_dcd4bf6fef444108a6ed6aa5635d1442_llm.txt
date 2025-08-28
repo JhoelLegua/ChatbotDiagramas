@@ -1,0 +1,83 @@
+@startuml
+!theme plain
+
+class "Aprendizaje Basado en Juegos (ABJ)" as ABJ {
+  + integrarElementosDeJuego()
+  + alinearConObjetivosEducativos()
+  + fomentarMotivacion()
+  + proporcionarRetroalimentacion()
+}
+
+class "Juego" as Juego {
+  - reglas : Set<Regla>
+  - mecánicas : Set<Mecanica>
+  - narrativa : String
+  + crearDesafio()
+  + generarInmersion()
+  + ofrecerRecompensas()
+}
+
+class "Aprendizaje" as Aprendizaje {
+  - contenido : String
+  - habilidades : Set<Habilidad>
+  - competencias : Set<Competencia>
+  + adquirirConocimiento()
+  + desarrollarHabilidades()
+  + aplicarConceptos()
+}
+
+class "Objetivos Educativos" as ObjetivosEducativos {
+  - meta : String
+  - resultadoEsperado : String
+  - nivelTaxonomia : NivelTaxonomia
+}
+
+class "Motivación del Jugador" as Motivacion {
+  - intrínseca : Boolean
+  - extrínseca : Boolean
+  - flujo : Boolean
+}
+
+class "Retroalimentación" as Retroalimentacion {
+  - instantánea : Boolean
+  - constructiva : Boolean
+  - específica : Boolean
+}
+
+class "Desafío Adecuado" as Desafio {
+  - nivelDificultad : Nivel
+  - propósito : String
+  - variabilidad : Boolean
+}
+
+class "Colaboración" as Colaboracion {
+  - interacciónJugadores : TipoInteraccion
+  - metasCompartidas : Boolean
+  - comunicación : Boolean
+}
+
+class "Experiencia Inmersiva" as Inmersion {
+  - atenciónSostenida : Boolean
+  - identificaciónConPersonaje : Boolean
+  - ambienteAtractivo : Boolean
+}
+
+ABJ "1" -- "*" Juego : <<utiliza>>
+ABJ "1" -- "*" Aprendizaje : <<busca>>
+ABJ "1" -- "1..*" ObjetivosEducativos : <<dirigido a>>
+ABJ "1" -- "1" Motivacion : <<fomenta>>
+ABJ "1" -- "1" Retroalimentacion : <<proporciona>>
+ABJ "1" -- "1" Desafio : <<integra>>
+ABJ "1" -- "0..1" Colaboracion : <<puede incluir>>
+ABJ "1" -- "1" Inmersion : <<apunta a>>
+
+Juego "1" -- "1" Desafio : <<ofrece>>
+Juego "1" -- "1" Motivacion : <<estimula>>
+Juego "1" -- "1" Retroalimentacion : <<contiene>>
+Juego "1" -- "1" Inmersion : <<genera>>
+
+Aprendizaje "1" -- "1..*" ObjetivosEducativos : <<establece>>
+
+note right of ABJ : El Aprendizaje Basado en Juegos (ABJ) combina \nla diversión y el compromiso de los juegos \ncon principios educativos para facilitar \nun aprendizaje significativo y duradero.
+
+@enduml

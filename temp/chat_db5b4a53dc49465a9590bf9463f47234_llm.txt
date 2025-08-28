@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+
+actor User as "Usuario"
+
+rectangle "Sistema de Procesamiento del Lenguaje Natural (PLN)" {
+  usecase "Realizar Clasificación de Texto" as UC_Classify
+  usecase "Extraer Información (NER, Relaciones)" as UC_Extract
+  usecase "Generar Texto (Resumen, Traducción)" as UC_Generate
+  usecase "Responder Preguntas" as UC_Answer
+  usecase "Procesar Texto (Tokenización, Lematización)" as UC_Preprocess
+}
+
+"Usuario" --> UC_Classify
+"Usuario" --> UC_Extract
+"Usuario" --> UC_Generate
+"Usuario" --> UC_Answer
+
+UC_Classify .> UC_Preprocess : <<include>>
+UC_Extract .> UC_Preprocess : <<include>>
+UC_Generate .> UC_Preprocess : <<include>>
+UC_Answer .> UC_Preprocess : <<include>>
+
+@enduml
